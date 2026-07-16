@@ -24,6 +24,24 @@ To publish the web build as static files:
 npx expo export --platform web   # output in dist/
 ```
 
+## Deploy
+
+**GitHub Pages** — publishing a GitHub release (or running the workflow
+manually) triggers `.github/workflows/deploy-pages.yml`, which exports
+the web build and deploys it to Pages. Enable Pages once in the repo
+settings (Source: GitHub Actions). Project sites are served from
+`/<repo-name>/`, which the workflow handles via the `BASE_URL` env var
+read by `app.config.js` — remove it if deploying to a custom domain.
+
+**Docker** — a multi-stage build that exports the site and serves it
+with nginx (route fallbacks, real 404s, immutable caching for hashed
+bundles):
+
+```bash
+docker build -t kubernetes-desktop-site .
+docker run --rm -p 8080:80 kubernetes-desktop-site
+```
+
 ## Structure
 
 ```
