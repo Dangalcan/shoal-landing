@@ -17,6 +17,13 @@ type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
 export const MONO = Platform.select({ ios: 'Menlo', default: 'monospace' });
 
+/** Cap content width on large (web/tablet) screens and center it. */
+export const CONTAINER: ViewStyle = {
+  width: '100%',
+  maxWidth: 1150,
+  alignSelf: 'center',
+};
+
 /* ---------- Text ---------- */
 
 export function Title({ children, style }: PropsWithChildren<{ style?: TextStyle }>) {
@@ -208,6 +215,7 @@ const styles = StyleSheet.create({
     lineHeight: 21,
   },
   section: {
+    ...CONTAINER,
     paddingHorizontal: 20,
     paddingTop: 40,
     gap: 10,

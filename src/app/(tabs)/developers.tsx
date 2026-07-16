@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Body, Bullet, Button, Card, CodeBlock, MONO, Section, Subtitle, Title } from '@/components/ui';
+import { Body, Bullet, Button, Card, CodeBlock, CONTAINER, MONO, Section, Subtitle, Title } from '@/components/ui';
 import { ghUrl } from '@/config';
 import { useTheme } from '@/theme';
 
@@ -94,6 +94,7 @@ export default function DevelopersScreen() {
 
 const styles = StyleSheet.create({
   head: {
+    ...CONTAINER,
     paddingHorizontal: 20,
     gap: 10,
   },

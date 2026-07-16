@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Chip,
+  CONTAINER,
   IconBadge,
   MONO,
   Section,
@@ -217,6 +218,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   hero: {
+    ...CONTAINER,
+    maxWidth: 900,
     paddingHorizontal: 20,
     alignItems: 'center',
     gap: 18,
@@ -243,6 +246,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tools: {
+    ...CONTAINER,
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
@@ -265,6 +269,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
+    ...CONTAINER,
     marginTop: 48,
     borderTopWidth: 1,
     paddingTop: 28,

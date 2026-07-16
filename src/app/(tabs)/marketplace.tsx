@@ -1,7 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  FlatList,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Body, Card, PriceTag, Subtitle, Title } from '@/components/ui';
+import { Body, Card, CONTAINER, PriceTag, Subtitle, Title } from '@/components/ui';
 import { CATEGORIES, CATEGORY_STYLE, Plugin } from '@/data/catalog';
 import { CatalogResult, fetchCatalog } from '@/lib/marketplace';
 import { useTheme } from '@/theme';
@@ -56,7 +55,10 @@ export default function MarketplaceScreen() {
   }, [catalog, query, category]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top + 16 }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: t.bg }}
+      contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: 32 }}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <View style={styles.head}>
         <Title style={{ fontSize: 28, lineHeight: 34 }}>Marketplace</Title>
         <Subtitle>
@@ -115,21 +117,17 @@ export default function MarketplaceScreen() {
         </ScrollView>
       </View>
 
-      <FlatList
-        data={plugins}
-        keyExtractor={(p) => p.id}
-        contentContainerStyle={styles.list}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        ListEmptyComponent={
-          catalog ? (
-            <Body style={{ textAlign: 'center', paddingTop: 32 }}>
-              No plugins match your search.
-            </Body>
-          ) : null
-        }
-        renderItem={({ item }) => <PluginCard plugin={item} />}
-      />
-    </View>
+      <View style={styles.list}>
+        {plugins.map((p) => (
+          <PluginCard key={p.id} plugin={p} />
+        ))}
+        {catalog && plugins.length === 0 ? (
+          <Body style={{ textAlign: 'center', paddingTop: 32, flexBasis: '100%' }}>
+            No plugins match your search.
+          </Body>
+        ) : null}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -164,6 +162,7 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
 
 const styles = StyleSheet.create({
   head: {
+    ...CONTAINER,
     paddingHorizontal: 20,
     gap: 10,
     paddingBottom: 12,
@@ -193,12 +192,16 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   list: {
+    ...CONTAINER,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: 20,
-    paddingBottom: 32,
     gap: 12,
   },
   plugin: {
     gap: 6,
+    flexGrow: 1,
+    flexBasis: 300,
   },
   pluginTop: {
     flexDirection: 'row',
