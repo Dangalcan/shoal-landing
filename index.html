@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kubernetes Desktop — Docker Desktop, but for Kubernetes</title>
+    <meta
+      name="description"
+      content="Kubernetes Desktop is an open-source desktop app for managing Kubernetes clusters — create local clusters, browse resources, stream logs, forward ports, edit manifests, and extend it with signed plugins from a built-in marketplace."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kubernetes Desktop — Docker Desktop, but for Kubernetes" />
+    <meta
+      property="og:description"
+      content="Open-source desktop app for Kubernetes clusters, with a built-in plugin marketplace. Local-first, no account, no telemetry."
+    />
+    <meta property="og:image" content="assets/icon-light.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Kubernetes Desktop" />
+    <meta
+      name="twitter:description"
+      content="Open-source desktop app for Kubernetes clusters, with a built-in plugin marketplace."
+    />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href="assets/icon-light.png" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- Inline lucide icon sprite (ISC license) — no CDN, works offline.
+         Referenced everywhere as <svg class="ic"><use href="#i-NAME"/></svg>. -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+<symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 6.528V3a1 1 0 0 1 1-1h0"/><path d="M18.237 21A15 15 0 0 0 22 11a6 6 0 0 0-10-4.472A6 6 0 0 0 2 11a15.1 15.1 0 0 0 3.763 10 3 3 0 0 0 3.648.648 5.5 5.5 0 0 1 5.178 0A3 3 0 0 0 18.237 21"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+<symbol id="i-boxes" viewBox="0 0 24 24"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></symbol>
+<symbol id="i-container" viewBox="0 0 24 24"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
+<symbol id="i-folder-tree" viewBox="0 0 24 24"><path d="M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"/><path d="M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z"/><path d="M3 5a2 2 0 0 0 2 2h3"/><path d="M3 3v13a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"/><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"/><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+<symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-scroll-text" viewBox="0 0 24 24"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+<symbol id="i-circle-check-big" viewBox="0 0 24 24"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+<symbol id="i-key-round" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+<symbol id="i-git-branch" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+<symbol id="i-layout-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+<symbol id="i-hexagon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></symbol>
+<symbol id="i-circle-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+<symbol id="i-cable" viewBox="0 0 24 24"><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1z"/><path d="M17 21v-2"/><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10"/><path d="M21 21v-2"/><path d="M3 5V3"/><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2z"/><path d="M7 5V3"/></symbol>
+<symbol id="i-file-code" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/></symbol>
+<symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+<symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></symbol></svg>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="wrap nav-inner">
+        <a class="logo" href="#">
+          <span class="logo-mark">
+            <!-- ship wheel mark -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/><circle cx="12" cy="12" r="2"/></svg>
+          </span>
+          <span>Kubernetes Desktop</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="#features">Features</a>
+          <a href="#marketplace">Marketplace</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#developers">Developers</a>
+        </div>
+        <div class="nav-cta">
+          <a class="gh" data-gh href="#" rel="noopener">
+            <svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>
+            <span>GitHub</span>
+          </a>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <svg class="ic ic-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+            <svg class="ic ic-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          </button>
+          <a class="btn btn-primary" href="#download">
+            <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+            Download
+          </a>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+            <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main id="main-content">
+      <!-- HERO -->
+      <header class="hero">
+        <div class="wrap hero-inner">
+          <div class="eyebrow">
+            <span class="pill" data-version>v1.0</span>
+            <span>Open source · LGPL-3.0 · 100% local-first</span>
+          </div>
+          <h1>
+            The desktop app for <em>Kubernetes</em>,<br />
+            with a plugin marketplace.
+          </h1>
+          <p class="lede">
+            Ship, inspect, and operate Kubernetes clusters from a single
+            desktop app. Install free and paid extensions from a curated
+            marketplace — like Odoo for your cluster ops.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" data-gh="/releases/latest" href="#download">
+              <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+              <span id="hero-dl">Download</span>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#marketplace">
+              <svg class="ic" aria-hidden="true"><use href="#i-store"/></svg>
+              Explore the marketplace
+            </a>
+          </div>
+          <div class="platform-note">
+            <span>Windows 10+</span>
+            <span class="dot"></span>
+            <span>macOS</span>
+            <span class="dot"></span>
+            <span>Linux · deb · AppImage</span>
+            <span class="dot"></span>
+            <span class="mono" data-version>v1.0.0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- APP PREVIEW (cycles Dashboard → Pods → Marketplace) -->
+      <section class="preview-stage" aria-label="App preview">
+        <div class="wrap">
+          <div class="preview" id="preview">
+            <div class="win-bar">
+              <div class="tl"><i></i><i></i><i></i></div>
+              <div class="win-title">Kubernetes Desktop — dev-cluster (kind)</div>
+            </div>
+            <div class="app">
+              <aside class="sb">
+                <div class="sb-head">
+                  <span class="mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/><circle cx="12" cy="12" r="2"/></svg>
+                  </span>
+                  <div>
+                    <div class="title">Kubernetes Desktop</div>
+                    <div class="sub" data-version>v1.0.0</div>
+                  </div>
+                </div>
+
+                <div class="sb-group">
+                  <div class="sb-label">Workspace</div>
+                  <button class="sb-item active" data-goto="0">
+                    <svg class="ic" aria-hidden="true"><use href="#i-layout-dashboard"/></svg> Dashboard
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-boxes"/></svg> Clusters
+                  </button>
+                  <button class="sb-item" data-goto="1">
+                    <svg class="ic" aria-hidden="true"><use href="#i-container"/></svg> Pods
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-server"/></svg> Services
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg> Deployments
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-folder-tree"/></svg> Namespaces
+                  </button>
+                </div>
+
+                <div class="sb-group">
+                  <div class="sb-label">Plugins</div>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-package"/></svg> Helm Manager
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg> Namespace Watcher
+                  </button>
+                  <button class="sb-item" data-goto="">
+                    <svg class="ic" aria-hidden="true"><use href="#i-activity"/></svg> Resource Monitor
+                  </button>
+                  <button class="sb-item" data-goto="2">
+                    <svg class="ic" aria-hidden="true"><use href="#i-store"/></svg> Marketplace
+                  </button>
+                </div>
+
+                <div class="sb-context">
+                  <div class="kw">Current context</div>
+                  <div class="ctx mono">kind-dev-cluster</div>
+                </div>
+              </aside>
+
+              <div class="main">
+                <!-- Panel 0: Dashboard -->
+                <div class="panel on" data-panel="0">
+                  <div class="crumbs">
+                    <span>Dashboard</span>
+                    <span class="sep">/</span>
+                    <span>Overview</span>
+                  </div>
+                  <h2>dev-cluster</h2>
+                  <p class="muted">kind · Kubernetes v1.31.0 · 3 nodes · healthy</p>
+
+                  <div class="stat-row">
+                    <div class="stat"><div class="k">Pods</div><div class="v">47</div><div class="d">+4 today</div></div>
+                    <div class="stat"><div class="k">Services</div><div class="v">18</div><div class="d">all healthy</div></div>
+                    <div class="stat"><div class="k">Deployments</div><div class="v">12</div><div class="d">3 rolling</div></div>
+                    <div class="stat"><div class="k">CPU</div><div class="v">62%</div><div class="d warn">near limit</div></div>
+                  </div>
+
+                  <div class="tbl">
+                    <div class="tbl-head">
+                      <span></span><span>Name</span><span>Status</span><span>Age</span><span>Restarts</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">api-gateway-7b4f9d5c8-xk2lm</div>
+                        <div class="ns">default</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">12h</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">postgres-primary-0</div>
+                        <div class="ns">database</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">3d</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico svc">S</span>
+                      <div>
+                        <div class="name">redis-cache</div>
+                        <div class="ns">cache</div>
+                      </div>
+                      <span><span class="badge ok">Active</span></span>
+                      <span class="cell mono">8d</span>
+                      <span class="cell mono">—</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico dep">D</span>
+                      <div>
+                        <div class="name">web-frontend</div>
+                        <div class="ns">default</div>
+                      </div>
+                      <span><span class="badge pend">Rolling</span></span>
+                      <span class="cell mono">1d</span>
+                      <span class="cell mono">—</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico ing">I</span>
+                      <div>
+                        <div class="name">public-ingress</div>
+                        <div class="ns">ingress-nginx</div>
+                      </div>
+                      <span><span class="badge ok">Active</span></span>
+                      <span class="cell mono">8d</span>
+                      <span class="cell mono">—</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel 1: Pods -->
+                <div class="panel" data-panel="1">
+                  <div class="crumbs">
+                    <span>Workspace</span>
+                    <span class="sep">/</span>
+                    <span>Pods</span>
+                  </div>
+                  <h2>Pods</h2>
+                  <p class="muted">47 pods · all namespaces</p>
+
+                  <div class="tbl">
+                    <div class="tbl-head">
+                      <span></span><span>Name</span><span>Status</span><span>Age</span><span>Restarts</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">api-gateway-7b4f9d5c8-xk2lm</div>
+                        <div class="ns">default</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">12h</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">web-frontend-5d8b7c6f9-p4qrt</div>
+                        <div class="ns">default</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">1d</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">postgres-primary-0</div>
+                        <div class="ns">database</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">3d</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">redis-cache-master-0</div>
+                        <div class="ns">cache</div>
+                      </div>
+                      <span><span class="badge pend">Pending</span></span>
+                      <span class="cell mono">42s</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">billing-worker-6f7d8c9b4-zn3vw</div>
+                        <div class="ns">jobs</div>
+                      </div>
+                      <span><span class="badge err">CrashLoop</span></span>
+                      <span class="cell mono">7m</span>
+                      <span class="cell mono">4</span>
+                    </div>
+                    <div class="row">
+                      <span class="ico pod">P</span>
+                      <div>
+                        <div class="name">ingress-nginx-controller-vv8sk</div>
+                        <div class="ns">ingress-nginx</div>
+                      </div>
+                      <span><span class="badge ok">Running</span></span>
+                      <span class="cell mono">8d</span>
+                      <span class="cell mono">0</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel 2: Marketplace (cards rendered from js/data.js) -->
+                <div class="panel" data-panel="2">
+                  <div class="crumbs">
+                    <span>Plugins</span>
+                    <span class="sep">/</span>
+                    <span>Marketplace</span>
+                  </div>
+                  <h2>Marketplace</h2>
+                  <p class="muted" id="mkt-count">Signed &amp; sandboxed</p>
+
+                  <div class="mini-grid" id="mini-grid"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKS -->
+      <section class="marks">
+        <div class="wrap">
+          <div class="lbl">Works with the tools you already use</div>
+          <div class="marks-row">
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-container"/></svg> Docker</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-circle-dot"/></svg> kind</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-hexagon"/></svg> minikube</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg> k3d</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-package"/></svg> Helm</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-git-branch"/></svg> Argo CD</div>
+            <div class="mk"><svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg> kubectl</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section class="sec" id="features">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="sec-tag">Core features</span>
+            <h2>Everything you need to operate Kubernetes, locally.</h2>
+            <p class="sec-sub">
+              A single, fast, native desktop app — no browser tabs, no
+              half-finished web dashboards. Built with Electron, React 19, and
+              TypeScript.
+            </p>
+          </div>
+          <div class="feat-grid">
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-boxes"/></svg></div>
+              <h3>One-click clusters</h3>
+              <p>Spin up local clusters with kind, minikube, or k3d. Switch between contexts in a dropdown. Delete them just as easily.</p>
+            </div>
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></div>
+              <h3>Live resource explorer</h3>
+              <p>Browse Pods, Services, Deployments, Ingresses, and every other Kubernetes resource with live status and YAML inspection.</p>
+            </div>
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg></div>
+              <h3>Logs &amp; built-in terminal</h3>
+              <p>Tail container logs in real time, attach a shell to any pod, and run kubectl from the integrated terminal without leaving the app.</p>
+            </div>
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-cable"/></svg></div>
+              <h3>Port forwarding</h3>
+              <p>Forward any service or pod to localhost in one click, and manage every active forward from a single panel.</p>
+            </div>
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-file-code"/></svg></div>
+              <h3>Manifest editor</h3>
+              <p>Write, validate, and apply YAML manifests from an editor that knows your cluster — no copy-pasting into a terminal.</p>
+            </div>
+            <div class="feat">
+              <div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg></div>
+              <h3>Secure by default</h3>
+              <p>Sandboxed renderer, signed plugins, local-first storage. Your cluster credentials never leave your machine.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPLIT (cluster lifecycle) -->
+      <section class="sec sec-alt">
+        <div class="wrap split">
+          <div class="split-copy">
+            <span class="sec-tag">Cluster lifecycle</span>
+            <h2>Everything kubectl does, without memorizing flags.</h2>
+            <p class="lede">
+              Whether you're testing an operator or running a full dev
+              environment, the cluster tooling is first-class. Create, inspect,
+              and delete clusters from the app — kubectl stays available when
+              you want it.
+            </p>
+            <ul class="feature-list">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Create and delete kind, minikube, and k3d clusters from the app</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Multi-cluster context switcher with live health checks</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Works offline — no telemetry, no login, no cloud account</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Kubeconfig stays in <span class="mono">~/.kube/config</span></li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Auto-updates keep the app current</li>
+            </ul>
+            <a class="btn btn-primary" href="#download">
+              Get the app <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </div>
+          <div class="terminal" role="img" aria-label="Terminal showing the kubectl commands the app replaces">
+            <div class="tl"><i></i><i></i><i></i></div>
+            <div><span class="dim"># the old way</span></div>
+            <div><span class="prompt">~</span> <span class="cmd">kubectl config use-context kind-dev-cluster</span></div>
+            <div><span class="prompt">~</span> <span class="cmd">kubectl get pods -A --field-selector=status.phase!=Running</span></div>
+            <div><span class="prompt">~</span> <span class="cmd">kubectl port-forward svc/api-gateway 8080:80 -n default</span></div>
+            <div><span class="prompt">~</span> <span class="cmd">kubectl logs -f deploy/web-frontend --all-containers --tail=200</span></div>
+            <div>&nbsp;</div>
+            <div><span class="ok">✓</span> or skip the flags — it's all one click in the app.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKETPLACE (cards + category chips rendered from js/data.js) -->
+      <section class="sec" id="marketplace">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="sec-tag">Marketplace</span>
+            <h2>A plugin for every cluster chore.</h2>
+            <p class="sec-sub">
+              Install free community plugins or buy commercial ones — signed,
+              sandboxed, and delivered through a built-in marketplace. Like Odoo
+              for your ops toolkit.
+            </p>
+          </div>
+
+          <div class="mkt-toolbar">
+            <div class="mkt-cats" id="mkt-cats" role="group" aria-label="Filter plugins by category"></div>
+            <label class="search">
+              <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+              <input type="search" id="mkt-search" placeholder="Search plugins…" aria-label="Search plugins" />
+            </label>
+          </div>
+
+          <div class="mkt-grid" id="mkt-grid"></div>
+          <noscript>
+            <p class="mkt-note">Enable JavaScript to browse the plugin catalog.</p>
+          </noscript>
+          <p class="mkt-empty" id="mkt-empty">No plugins match your search.</p>
+
+          <p class="mkt-note">
+            The full marketplace lives inside the app — install any plugin in one click.
+          </p>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section class="sec sec-alt" id="pricing">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="sec-tag">Pricing</span>
+            <h2>The app is free. Pay only for the plugins you want.</h2>
+            <p class="sec-sub">
+              No subscriptions for the core app, no seats, no account. Plugins
+              are priced by their developers — buy once, activate with a
+              license key.
+            </p>
+          </div>
+          <div class="price-grid">
+            <div class="price-card">
+              <h3>Core app</h3>
+              <div class="price-amount">$0 <small>forever</small></div>
+              <p class="desc">Open source under LGPL-3.0. Everything built in.</p>
+              <ul class="feature-list">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Clusters, resource explorer, logs &amp; terminal</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Port forwarding &amp; manifest editor</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> No account, no telemetry</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Auto-updates</li>
+              </ul>
+              <a class="btn btn-primary" href="#download">
+                <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg> Download
+              </a>
+            </div>
+            <div class="price-card hl">
+              <h3>Plugins</h3>
+              <div class="price-amount">from $19 <small>one-time</small></div>
+              <p class="desc">Free and commercial plugins, delivered through the built-in marketplace.</p>
+              <ul class="feature-list">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Signed and sandboxed by default</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Free trials on paid plugins</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> License keys activate in-app</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Prices set by developers</li>
+              </ul>
+              <a class="btn btn-primary" href="#marketplace">
+                <svg class="ic" aria-hidden="true"><use href="#i-store"/></svg> Browse plugins
+              </a>
+            </div>
+            <div class="price-card">
+              <h3>Publish &amp; earn</h3>
+              <div class="price-amount">Rev. share <small>per sale</small></div>
+              <p class="desc">Build plugins and sell them to every Kubernetes Desktop user.</p>
+              <ul class="feature-list">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Publish free or paid plugins</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Marketplace handles payments &amp; licensing</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Signed distribution to every user</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Keep the majority of every sale</li>
+              </ul>
+              <a class="btn btn-ghost" href="#developers">
+                <svg class="ic" aria-hidden="true"><use href="#i-code"/></svg> Start building
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEVELOPERS -->
+      <section class="sec" id="developers">
+        <div class="wrap split">
+          <div class="split-copy">
+            <span class="sec-tag">For plugin developers</span>
+            <h2>Build a plugin in an afternoon. Sell it the same day.</h2>
+            <p class="lede">
+              A plugin is a small JS bundle: a Node module for cluster access
+              plus a sandboxed UI. Declare the permissions you need in the
+              manifest, sign the bundle, and publish — free or paid — to the
+              marketplace.
+            </p>
+            <ul class="feature-list">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Register sidebar items, pages, resource actions, and notifications</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Permission-gated capabilities — users see exactly what a plugin can do</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Licensing, trials, and payments handled by the marketplace</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-circle-check-big"/></svg> Ship free plugins, one-time purchases, or subscriptions</li>
+            </ul>
+            <a class="btn btn-primary" data-gh="#readme" href="#" rel="noopener">
+              Read the plugin docs <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </div>
+          <div class="code-block" aria-label="Example plugin manifest">
+            <pre><span class="c">// plugin.json</span>
+{
+  <span class="k">"id"</span>: <span class="s">"my-first-plugin"</span>,
+  <span class="k">"name"</span>: <span class="s">"My First Plugin"</span>,
+  <span class="k">"version"</span>: <span class="s">"1.0.0"</span>,
+  <span class="k">"entry"</span>: <span class="s">"index.js"</span>,
+  <span class="k">"renderer"</span>: <span class="s">"renderer.js"</span>,
+  <span class="k">"permissions"</span>: [<span class="s">"kubernetes"</span>, <span class="s">"notifications"</span>],
+  <span class="k">"license"</span>: { <span class="k">"type"</span>: <span class="s">"paid"</span> }
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section class="sec sec-alt">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="sec-tag">Architecture</span>
+            <h2>Native desktop. Sandboxed plugins. Zero cloud.</h2>
+            <p class="sec-sub">
+              Three layers, one app. Every process is isolated, every plugin is
+              signed, and your cluster data never leaves your machine.
+            </p>
+          </div>
+          <div class="arch-grid">
+            <div class="arch-card">
+              <div class="arch-ic"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg></div>
+              <h3>Main process</h3>
+              <p>Electron main runs the app lifecycle and brokers every OS call — <span class="mono">docker</span>, <span class="mono">kubectl</span>, <span class="mono">kind</span> — through a typed IPC bridge.</p>
+            </div>
+            <div class="arch-card light">
+              <div class="arch-ic"><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg></div>
+              <h3>Renderer UI</h3>
+              <p>A sandboxed React 19 app powered by Vite, Tailwind v4, and React Router. No Node APIs, no <span class="mono">fs</span>, no escape.</p>
+            </div>
+            <div class="arch-card">
+              <div class="arch-ic"><svg class="ic" aria-hidden="true"><use href="#i-puzzle"/></svg></div>
+              <h3>Plugin runtime</h3>
+              <p>Plugins are cryptographically signed bundles with declared permissions. License keys and trials are handled by the marketplace backend.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICKSTART / DOWNLOAD -->
+      <section class="sec" id="download">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="sec-tag">Quickstart</span>
+            <h2>From download to cluster in three steps.</h2>
+            <p class="sec-sub">No sign-up. No credit card. No CLI required.</p>
+          </div>
+          <div class="quickstart">
+            <div class="step">
+              <div class="step-num">STEP 01</div>
+              <h3>Install</h3>
+              <p>Grab the installer for Windows, macOS, or Linux from GitHub Releases and run it.</p>
+              <a class="step-hint" data-gh="/releases/latest" href="#" rel="noopener">
+                <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+                <span>Download the latest release</span>
+              </a>
+            </div>
+            <div class="step">
+              <div class="step-num">STEP 02</div>
+              <h3>Connect or create</h3>
+              <p>The app picks up your kubeconfig automatically — or create a fresh local cluster with kind, minikube, or k3d from the Clusters page.</p>
+              <span class="step-hint">
+                <svg class="ic" aria-hidden="true"><use href="#i-boxes"/></svg>
+                <span>Clusters → New cluster</span>
+              </span>
+            </div>
+            <div class="step">
+              <div class="step-num">STEP 03</div>
+              <h3>Extend</h3>
+              <p>Open the built-in marketplace and install plugins — free ones in one click, paid ones with a license key.</p>
+              <span class="step-hint">
+                <svg class="ic" aria-hidden="true"><use href="#i-store"/></svg>
+                <span>Plugins → Marketplace</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA STRIP -->
+      <section class="cta-strip">
+        <div class="wrap">
+          <h2>Your cluster, on your desktop.</h2>
+          <p>Open source, local-first, and free forever for the core app. Download it once — then customize it with whichever plugins fit your workflow.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#download">
+              <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+              Download <span data-version>v1.0.0</span>
+            </a>
+            <a class="btn btn-ghost btn-lg" data-gh href="#" rel="noopener">
+              <svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>
+              Star on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-brand">
+              <span class="logo" style="font-size:16px">
+                <span class="logo-mark">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/><circle cx="12" cy="12" r="2"/></svg>
+                </span>
+                Kubernetes Desktop
+              </span>
+            </div>
+            <p class="foot-desc">
+              An open-source desktop app for Kubernetes clusters, with a
+              built-in plugin marketplace. Licensed under LGPL-3.0.
+            </p>
+          </div>
+          <div class="foot-col">
+            <h5>Product</h5>
+            <a href="#download">Download</a>
+            <a href="#marketplace">Marketplace</a>
+            <a href="#pricing">Pricing</a>
+            <a data-gh="/releases" href="#" rel="noopener">Changelog</a>
+          </div>
+          <div class="foot-col">
+            <h5>Developers</h5>
+            <a href="#developers">Plugin API</a>
+            <a data-gh="/blob/master/CONTRIBUTING.md" href="#" rel="noopener">Contributing</a>
+            <a data-gh="/blob/master/SECURITY.md" href="#" rel="noopener">Security</a>
+          </div>
+          <div class="foot-col">
+            <h5>Community</h5>
+            <a data-gh href="#" rel="noopener">GitHub</a>
+            <a data-gh="/discussions" href="#" rel="noopener">Discussions</a>
+            <a data-gh="/issues" href="#" rel="noopener">Issues</a>
+          </div>
+          <div class="foot-col">
+            <h5>Legal</h5>
+            <a data-gh="/blob/master/LICENSE" href="#" rel="noopener">License</a>
+            <a data-gh="/blob/master/CODE_OF_CONDUCT.md" href="#" rel="noopener">Code of conduct</a>
+          </div>
+        </div>
+        <div class="foot-bot">
+          <div>© 2026 Kubernetes Desktop contributors · LGPL-3.0-or-later</div>
+          <div class="foot-social">
+            <a data-gh href="#" rel="noopener" aria-label="GitHub">
+              <svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
