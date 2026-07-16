@@ -1,50 +1,56 @@
-# Kubernetes Desktop — Landing Page
+# Kubernetes Desktop — Cross-platform site & marketplace app
 
-Static landing page for [Kubernetes Desktop](https://github.com/dangalcan/kubernetes-desktop).
-No build step, no external dependencies — plain HTML/CSS/JS that also works
-when opened directly from the filesystem.
+Expo (React Native + react-native-web) app for
+[Kubernetes Desktop](https://github.com/dangalcan/kubernetes-desktop).
+One codebase, three targets: **web**, **Android**, and **iOS**.
+
+The Marketplace tab fetches the live plugin catalog from the kdMarket
+backend (`GET /plugins`) and falls back to a bundled snapshot when the
+backend is offline.
+
+## Run
+
+```bash
+npm install
+
+npm run web        # browser (dev server)
+npm run android    # Android emulator / device (via Expo)
+npm run ios        # iOS simulator (macOS) — or use Expo Go on a device
+```
+
+To publish the web build as static files:
+
+```bash
+npx expo export --platform web   # output in dist/
+```
 
 ## Structure
 
 ```
-index.html      Markup + inline SVG icon sprite (lucide, ISC license)
-css/main.css    All styles; design tokens at the top, dark mode included
-js/data.js      Content that changes between releases: repo URL, version,
-                plugin catalog (mirror of kdMarket's data/catalog.json)
-js/main.js      Behavior: rendering, theme toggle, mobile menu, filters,
-                preview panel cycling, OS-aware download label
-assets/         App icons (favicon / OG image)
-```
-
-## Preview
-
-Open `index.html` in a browser, or serve the folder:
-
-```
-python -m http.server 9000
+src/app/            expo-router routes
+  _layout.tsx       root stack + navigation theme
+  (tabs)/           Home · Marketplace · Developers
+src/components/ui.tsx  shared building blocks (Card, Button, Chip, …)
+src/config.ts       repo URL, app version, marketplace backend URL
+src/data/catalog.ts plugin types + bundled catalog snapshot
+src/lib/marketplace.ts  live catalog fetch with offline fallback
+src/theme.ts        light/dark design tokens (from the app's variables.scss)
+src/hooks/          hydration-safe color scheme hook
 ```
 
 ## Common edits
 
-- **New release**: bump `version` in `js/data.js`. Every `data-version`
-  element on the page updates automatically.
-- **Repo moved**: change `repoUrl` in `js/data.js`. Every `data-gh` link
-  resolves from it (`data-gh="/releases"` → `<repoUrl>/releases`).
-- **Plugin added/repriced**: edit the `plugins` array in `js/data.js`
-  (keep in sync with kdMarket's `data/catalog.json`). The marketplace
-  grid, category chips, and the app-preview marketplace panel all render
-  from it.
-- **New icon**: add a `<symbol id="i-NAME">` to the sprite in
-  `index.html`, then reference it with
-  `<svg class="ic" aria-hidden="true"><use href="#i-NAME"/></svg>`.
-  Icon paths come from [lucide](https://lucide.dev).
-- **Colors / dark mode**: edit the token blocks at the top of
-  `css/main.css`. Light tokens live in `:root`, dark tokens in the
-  `prefers-color-scheme` media query and `[data-theme='dark']` (keep the
-  two dark blocks identical).
+- **New release**: bump `appVersion` in `src/config.ts`.
+- **Repo moved**: change `repoUrl` in `src/config.ts`.
+- **Backend moved**: change `marketplaceUrl` in `src/config.ts`
+  (Android emulator: use `http://10.0.2.2:3001`).
+- **Catalog changed**: the Marketplace tab picks up backend changes
+  automatically; also refresh the snapshot in `src/data/catalog.ts`
+  so the offline fallback stays current.
 
-## Responsive breakpoints
+## Notes
 
-- `960px` — tablet: 2-column grids, hamburger nav, preview sidebar hidden
-- `620px` — phone: 1-column grids, full-width CTAs, trimmed nav
-- `pointer: coarse` — larger touch targets
+- Dark mode follows the OS color scheme.
+- The app is open source (LGPL-3.0); there is no pricing page. Commercial
+  plugins are sold through the marketplace, Odoo-style, with revenue
+  shared with plugin developers.
