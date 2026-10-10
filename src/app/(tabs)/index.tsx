@@ -205,7 +205,7 @@ export default function HomeScreen() {
       <View style={[styles.footer, { borderTopColor: t.border }]}>
         <MaterialCommunityIcons name="ship-wheel" size={22} color={t.ink3} />
         <Body style={{ textAlign: 'center' }}>
-          © 2026 Kubernetes Desktop contributors · LGPL-3.0-or-later
+          © 2026 Shoal contributors · LGPL-3.0-or-later
         </Body>
         <View style={styles.ctaRow}>
           <Button label="GitHub" icon="github" variant="ghost" url={ghUrl()} />

@@ -64,7 +64,7 @@ export const BUNDLED_CATALOG: Plugin[] = [
   {
     id: 'resource-monitor',
     name: 'Resource Monitor',
-    author: 'K8s Desktop Team',
+    author: 'Shoal Team',
     version: '1.0.0',
     price: 0,
     category: 'Monitoring',
@@ -94,7 +94,7 @@ export const BUNDLED_CATALOG: Plugin[] = [
   {
     id: 'ingress-inspector',
     name: 'Ingress Inspector',
-    author: 'K8s Desktop Team',
+    author: 'Shoal Team',
     version: '1.1.0',
     price: 0,
     category: 'Networking',
@@ -114,7 +114,7 @@ export const BUNDLED_CATALOG: Plugin[] = [
   {
     id: 'namespace-watcher',
     name: 'Namespace Watcher',
-    author: 'K8s Desktop Team',
+    author: 'Shoal Team',
     version: '1.0.0',
     price: 0,
     category: 'Monitoring',

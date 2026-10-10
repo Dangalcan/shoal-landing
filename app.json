@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Kubernetes Desktop",
-    "slug": "kubernetes-desktop",
+    "name": "Shoal",
+    "slug": "shoal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "kubernetesdesktop",
+    "scheme": "shoal",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

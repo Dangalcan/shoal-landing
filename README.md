@@ -1,7 +1,7 @@
-# Kubernetes Desktop — Cross-platform site & marketplace app
+# Shoal — Cross-platform site & marketplace app
 
 Expo (React Native + react-native-web) app for
-[Kubernetes Desktop](https://github.com/dangalcan/kubernetes-desktop).
+[Shoal](https://github.com/Dangalcan/shoal).
 One codebase, three targets: **web**, **Android**, and **iOS**.
 
 The Marketplace tab fetches the live plugin catalog from the kdMarket
@@ -38,8 +38,8 @@ with nginx (route fallbacks, real 404s, immutable caching for hashed
 bundles):
 
 ```bash
-docker build -t kubernetes-desktop-site .
-docker run --rm -p 8080:80 kubernetes-desktop-site
+docker build -t shoal-site .
+docker run --rm -p 8080:80 shoal-site
 ```
 
 ## Structure

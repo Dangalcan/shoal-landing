@@ -1,7 +1,7 @@
 # Build the static web export, then serve it with nginx.
 #
-#   docker build -t kubernetes-desktop-site .
-#   docker run --rm -p 8080:80 kubernetes-desktop-site
+#   docker build -t shoal-site .
+#   docker run --rm -p 8080:80 shoal-site
 #
 # The image serves the site at the root path. To build for a subpath
 # (e.g. behind a reverse proxy), pass --build-arg BASE_URL=/some/path.

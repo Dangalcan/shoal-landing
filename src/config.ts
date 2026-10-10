@@ -3,7 +3,7 @@
  */
 export const CONFIG = {
   /** GitHub repository for the desktop app. All outbound links derive from it. */
-  repoUrl: 'https://github.com/dangalcan/kubernetes-desktop',
+  repoUrl: 'https://github.com/Dangalcan/shoal',
 
   /** Version of the desktop app advertised on the Home screen. */
   appVersion: '1.0.0',
