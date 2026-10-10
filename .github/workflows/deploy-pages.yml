@@ -1,8 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main]
   # Allow manual deploys from the Actions tab as well.
   workflow_dispatch:
 
@@ -17,6 +17,8 @@ concurrency:
 
 jobs:
   build:
+    # GitHub Pages on the Free plan needs a public repository.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,17 +31,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Served at the root of https://shoal.dangalcan.com (public/CNAME),
+      # so no BASE_URL. The script also copies +not-found.html to 404.html.
       - name: Export static web build
-        # Project sites are served from https://<user>.github.io/<repo>/,
-        # so the bundle must be built with the repo name as base path.
-        # Remove BASE_URL if this ever deploys to a custom domain or a
-        # <user>.github.io root site.
-        env:
-          BASE_URL: /${{ github.event.repository.name }}
-        run: npx expo export --platform web
-
-      - name: Add 404 fallback
-        run: cp "dist/+not-found.html" dist/404.html
+        run: npm run export
 
       - uses: actions/upload-pages-artifact@v3
         with:

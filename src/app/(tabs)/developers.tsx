@@ -1,24 +1,38 @@
+import Head from 'expo-router/head';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Body, Bullet, Button, Card, CodeBlock, CONTAINER, MONO, Section, Subtitle, Title } from '@/components/ui';
-import { ghUrl } from '@/config';
+import {
+  Body,
+  Bullet,
+  Button,
+  Card,
+  CodeBlock,
+  CONTAINER,
+  MONO,
+  Section,
+  Subtitle,
+  Title,
+} from '@/components/ui';
+import { CONFIG, docsUrl, ghUrl } from '@/config';
 import { useTheme } from '@/theme';
 
-const KEY = '#93c5fd';
-const STR = '#86efac';
+const KEY = '#5eead4';
+const STR = '#fcd34d';
 const COMMENT = '#64748b';
 
 const MANIFEST = [
   { text: '// plugin.json', color: COMMENT },
   { text: '{' },
-  { text: '  "id": "my-first-plugin"', color: KEY },
-  { text: '  "name": "My First Plugin"', color: KEY },
-  { text: '  "version": "1.0.0"', color: KEY },
-  { text: '  "entry": "index.js"', color: KEY },
-  { text: '  "renderer": "renderer.js"', color: KEY },
-  { text: '  "permissions": ["kubernetes", "notifications"]', color: STR },
-  { text: '  "license": { "type": "paid" }', color: STR },
+  { text: '  "id": "my-first-plugin",', color: KEY },
+  { text: '  "name": "My First Plugin",', color: KEY },
+  { text: '  "version": "1.0.0",', color: KEY },
+  { text: '  "description": "Shows quick stats for the active cluster",', color: KEY },
+  { text: '  "author": "You",', color: KEY },
+  { text: '  "main": "index.js",', color: KEY },
+  { text: '  "renderer": "renderer.js",', color: KEY },
+  { text: '  "permissions": ["kubernetes", "ui", "storage"],', color: STR },
+  { text: '  "license": { "type": "free", "spdx": "MIT" }', color: STR },
   { text: '}' },
 ];
 
@@ -32,32 +46,38 @@ export default function DevelopersScreen() {
     <ScrollView
       style={{ backgroundColor: t.bg }}
       contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: 48 }}>
+      <Head>
+        <title>Plugin developers · Shoal</title>
+        <link rel="canonical" href={`${CONFIG.siteUrl}developers`} />
+      </Head>
+
       <View style={styles.head}>
         <Title style={{ fontSize: 28, lineHeight: 34 }}>For plugin developers</Title>
         <Subtitle>
-          Build a plugin in an afternoon. Publish it the same day — free or paid. The app is open
-          source; developers earn through the marketplace, the way Odoo apps do.
+          Extend Shoal with your own pages, dashboard widgets and resource actions. A plugin is a
+          small JavaScript bundle with a manifest, and the two bundled examples are a good place to
+          start.
         </Subtitle>
       </View>
 
-      <Section tag="How it works" heading="A plugin is a small JS bundle.">
+      <Section tag="How it works" heading="A Node module plus a sandboxed UI.">
         <Body>
-          A Node module for cluster access plus a sandboxed UI. Declare the permissions you need in
-          the manifest, sign the bundle, and publish to the marketplace.
+          The Node side talks to your clusters through a permission-gated context. The UI side runs
+          in a sandboxed frame and only reaches what the manifest declares.
         </Body>
         <View style={{ gap: 10, marginTop: 4 }}>
-          <Bullet>Register sidebar items, pages, resource actions, and notifications</Bullet>
-          <Bullet>Permission-gated capabilities — users see exactly what a plugin can do</Bullet>
-          <Bullet>Licensing, trials, and payments handled by the marketplace backend</Bullet>
-          <Bullet>Ship free plugins, one-time purchases, or subscriptions</Bullet>
+          <Bullet>Register pages, dashboard widgets, sidebar entries, modals and resource actions</Bullet>
+          <Bullet>Declare settings in the manifest and Shoal draws the settings form for you</Bullet>
+          <Bullet>Store data per plugin and send desktop notifications</Bullet>
+          <Bullet>Installed plugins run their Node code in a separate process</Bullet>
         </View>
         <CodeBlock lines={MANIFEST} />
       </Section>
 
       <Section tag="Permissions" heading="Six capabilities, all opt-in.">
         <Body>
-          Plugins run sandboxed and only reach what the manifest declares. The validator rejects
-          anything outside this allowlist:
+          Plugins only reach what the manifest declares. The validator rejects anything outside this
+          list.
         </Body>
         <View style={styles.perms}>
           {PERMISSIONS.map((p) => (
@@ -68,24 +88,35 @@ export default function DevelopersScreen() {
         </View>
       </Section>
 
-      <Section tag="Publish & earn" heading="Open core, sustainable marketplace.">
+      <Section tag="During the beta" heading="Build from source today.">
         <Card>
           <Body>
-            The desktop app is free and open source (LGPL-3.0). Like Odoo's app store, the
-            marketplace is how the ecosystem sustains itself: developers publish free or commercial
-            plugins, the marketplace handles checkout, license keys, trials, and signed
-            distribution, and developers keep the majority of every sale through Stripe Connect
-            payouts.
+            Run Shoal from source with <Text style={{ fontFamily: MONO }}>npm run dev</Text> and drop
+            your plugin folder into the plugins directory or use Load Unpacked Plugin. Development
+            builds load unsigned plugins. Installed releases only load plugins signed with the Shoal
+            key, so third-party plugins cannot be shared with users yet.
           </Body>
         </Card>
-        <View style={{ gap: 10, marginTop: 4 }}>
-          <Bullet>Register as a developer and publish through the marketplace API</Bullet>
-          <Bullet>Every version is reviewed and signed before it reaches users</Bullet>
-          <Bullet>Stripe Connect onboarding for payouts — no invoicing on your side</Bullet>
-        </View>
         <View style={styles.ctaRow}>
-          <Button label="Read the plugin docs" icon="book-open-variant" url={ghUrl('#readme')} />
-          <Button label="Contributing guide" icon="source-pull" variant="ghost" url={ghUrl('/blob/master/CONTRIBUTING.md')} />
+          <Button label="Read the plugin guide" icon="book-open-variant" url={docsUrl()} />
+          <Button
+            label="Contributing guide"
+            icon="source-pull"
+            variant="ghost"
+            url={ghUrl('/blob/master/CONTRIBUTING.md')}
+          />
+        </View>
+      </Section>
+
+      <Section tag="Planned for 1.0" heading="Publishing and a plugin marketplace.">
+        <View style={{ gap: 10, marginTop: 4 }}>
+          <Bullet icon="clock-outline">A marketplace inside the app to find and install plugins</Bullet>
+          <Bullet icon="clock-outline">
+            Signing for third-party plugins so users can install them safely
+          </Bullet>
+          <Bullet icon="clock-outline">
+            Free and paid plugins, with developers keeping most of every sale
+          </Bullet>
         </View>
       </Section>
     </ScrollView>

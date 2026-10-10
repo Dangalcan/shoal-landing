@@ -16,8 +16,7 @@ COPY . .
 
 ARG BASE_URL=""
 ENV BASE_URL=${BASE_URL}
-RUN npx expo export --platform web \
-  && cp "dist/+not-found.html" dist/404.html
+RUN npm run export
 
 FROM nginx:1.27-alpine
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

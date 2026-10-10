@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropsWithChildren } from 'react';
 import {
+  Image,
   Linking,
   Platform,
   Pressable,
@@ -100,11 +101,16 @@ export function IconBadge({
   );
 }
 
-export function Bullet({ children }: PropsWithChildren) {
+/** List item with a check by default; pass another icon for plans or notes. */
+export function Bullet({ children, icon }: PropsWithChildren<{ icon?: IconName }>) {
   const t = useTheme();
   return (
     <View style={styles.bullet}>
-      <MaterialCommunityIcons name="check-circle-outline" size={16} color={t.success} />
+      <MaterialCommunityIcons
+        name={icon ?? 'check-circle-outline'}
+        size={16}
+        color={icon ? t.ink3 : t.success}
+      />
       <Text style={[styles.bulletText, { color: t.ink2 }]}>{children}</Text>
     </View>
   );
@@ -155,25 +161,24 @@ export function Button({
   );
 }
 
-export function PriceTag({ price }: { price: number }) {
-  const t = useTheme();
-  const free = price === 0;
+/** The Shoal app icon. */
+export function Logo({ size = 40 }: { size?: number }) {
   return (
-    <View
-      style={[
-        styles.priceTag,
-        free
-          ? { backgroundColor: t.successSoft }
-          : { backgroundColor: t.dark ? '#f1f5f9' : '#0f172a' },
-      ]}>
-      <Text
-        style={{
-          fontSize: 12,
-          fontWeight: '700',
-          color: free ? (t.dark ? t.success : '#166534') : t.dark ? '#0f172a' : '#ffffff',
-        }}>
-        {free ? 'Free' : `$${price}`}
-      </Text>
+    <Image
+      source={require('@/assets/images/logo.png')}
+      style={{ width: size, height: size }}
+      accessibilityLabel="Shoal"
+    />
+  );
+}
+
+/** Highlighted note, e.g. the SmartScreen warning on unsigned installers. */
+export function Notice({ icon, children }: PropsWithChildren<{ icon: IconName }>) {
+  const t = useTheme();
+  return (
+    <View style={[styles.notice, { backgroundColor: t.warnSoft, borderColor: t.border }]}>
+      <MaterialCommunityIcons name={icon} size={18} color={t.warn} />
+      <Text style={[styles.bulletText, { color: t.ink2 }]}>{children}</Text>
     </View>
   );
 }
@@ -272,11 +277,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     minHeight: 44,
   },
-  priceTag: {
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 6,
-    alignSelf: 'flex-start',
+  notice: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 14,
   },
   code: {
     backgroundColor: '#0b1220',
