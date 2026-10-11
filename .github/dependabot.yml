@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # Workflow actions only. GitHub retires old Node runtimes for actions, and
+  # an outdated action stops the Pages deploy.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
