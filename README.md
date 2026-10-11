@@ -55,6 +55,7 @@ src/hooks/            hydration-safe color scheme hook
 assets/images/        app icon, favicon, splash and Android icons
 assets/screenshots/   WebP copies of the app screenshots
 public/               copied as is into the export (CNAME, og.png)
+promo/                promo video source, export script and MP4s (not part of the site)
 ```
 
 ## Common edits
