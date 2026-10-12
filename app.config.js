@@ -1,6 +1,8 @@
 /**
- * Extends app.json. BASE_URL lets CI export the web build under a subpath
- * (GitHub Pages project sites serve from /<repo-name>/). Unset locally.
+ * Extends app.json. BASE_URL lets a build serve the site under a subpath,
+ * which only the Docker image uses (`--build-arg BASE_URL=/some/path`).
+ * The deployed site lives at the root of shoal.dangalcan.com, so CI and
+ * local exports leave it unset.
  */
 module.exports = ({ config }) => ({
   ...config,

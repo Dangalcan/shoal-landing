@@ -18,16 +18,19 @@ npm run export     # static site in dist/ (also writes dist/404.html)
 
 ## Deploy
 
-**GitHub Pages.** Every push to `main` (or a manual run) triggers
-`.github/workflows/deploy-pages.yml`, which exports the site and deploys it
-to Pages. `public/CNAME` sets the custom domain, and Expo copies `public/`
-into `dist/` on export. The site lives at the domain root, so no `BASE_URL`
-is set. The workflow skips itself while the repository is private, because
-Pages on the Free plan needs a public repository.
+**GitHub Pages.** `.github/workflows/deploy-pages.yml` exports the site and
+checks the result (`scripts/finish-export.js`) on every push and pull
+request, and deploys it to Pages on pushes to `main` and manual runs. The
+custom domain is set in the repository's Pages settings (with Pages served
+from Actions, the `public/CNAME` file is only a reminder that Expo copies
+into `dist/`). The site lives at the domain root, so no `BASE_URL` is set.
+The deploy job skips itself while the repository is private, because Pages
+on the Free plan needs a public repository.
 
 One-time setup in the repository settings: Pages source "GitHub Actions",
 custom domain `shoal.dangalcan.com`, and Enforce HTTPS once the certificate
 is ready. DNS needs a `CNAME` record from `shoal` to `dangalcan.github.io`.
+The exact commands are in the app repository's `docs/GOING_PUBLIC.md`.
 
 **Docker.** A multi-stage build that exports the site and serves it with
 nginx (route fallbacks, real 404s, immutable caching for hashed bundles):
@@ -45,24 +48,28 @@ Windows, which rewrites `/path` into a Windows path.
 
 ```
 src/app/              expo-router routes
-  +html.tsx           root HTML for the web export (title, Open Graph tags)
+  +html.tsx           root HTML for the web export (description, Open Graph tags, icons)
+  +not-found.tsx      404 page (exported as 404.html for GitHub Pages)
   _layout.tsx         root stack + navigation theme
   (tabs)/             Home · Developers
 src/components/ui.tsx shared building blocks (Card, Button, Notice, Logo, …)
-src/config.ts         repo URL, app version, site URL, link helpers
+src/config.ts         repo URL, app version, STABLE_RELEASED flag, site URL, link helpers
 src/theme.ts          light/dark design tokens (teal accent from the app icon)
 src/hooks/            hydration-safe color scheme hook
+scripts/finish-export.js  writes 404.html and checks the export (run by `npm run export`)
 assets/images/        app icon, favicon, splash and Android icons
 assets/screenshots/   WebP copies of the app screenshots
-public/               copied as is into the export (CNAME, og.png)
+public/               copied as is into the export (CNAME, og.png, robots.txt, apple-touch-icon.png)
 promo/                promo video source, export script and MP4s (not part of the site)
 ```
 
 ## Common edits
 
-- **New release**: bump `appVersion` in `src/config.ts`. Download buttons
-  point at `/releases/latest`, which skips prereleases, so they only work
-  once a stable release exists.
+- **Stable release day (2 November 2026)**: set `STABLE_RELEASED` to `true`
+  in `src/config.ts`. The download buttons then point at `/releases/latest`
+  (which skips prereleases) and the "ships on" note disappears. Until then
+  they open the releases list, where the release candidates are.
+- **New release**: bump `appVersion` in `src/config.ts`.
 - **New screenshots**: regenerate them in the app repo with
   `npm run screenshots` (see its `docs/E2E-TESTS.md`), then convert the
   `docs/images/*.png` files you need to WebP in `assets/screenshots/`.

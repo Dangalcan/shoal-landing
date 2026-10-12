@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   # Allow manual deploys from the Actions tab as well.
   workflow_dispatch:
 
@@ -12,13 +14,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # Exports the site and checks the result on every push and pull request,
+  # so a broken page never reaches main unnoticed.
   build:
-    # GitHub Pages on the Free plan needs a public repository.
-    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -31,17 +33,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Served at the root of https://shoal.dangalcan.com (public/CNAME),
-      # so no BASE_URL. The script also copies +not-found.html to 404.html.
+      # Served at the root of https://shoal.dangalcan.com, so no BASE_URL.
+      # The script also writes 404.html and checks the export.
       - name: Export static web build
         run: npm run export
 
-      - uses: actions/upload-pages-artifact@v5
+      # GitHub Pages on the Free plan needs a public repository; until the
+      # repository is public the export and its checks are the whole job.
+      - name: Upload the site for Pages
+        if: ${{ github.event_name != 'pull_request' && !github.event.repository.private }}
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: build
+    if: ${{ github.event_name != 'pull_request' && !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

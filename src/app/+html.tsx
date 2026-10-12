@@ -22,6 +22,7 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content={DESCRIPTION} />
         <meta name="theme-color" content="#0B2233" />
+        <link rel="apple-touch-icon" href={`${CONFIG.siteUrl}apple-touch-icon.png`} />
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Shoal" />

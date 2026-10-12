@@ -36,7 +36,11 @@ const MANIFEST = [
   { text: '}' },
 ];
 
-const PERMISSIONS = ['kubernetes', 'filesystem', 'network', 'ui', 'storage', 'notifications'];
+const PERMISSIONS = [
+  { name: 'kubernetes', text: 'cluster reads and writes through kubectl, Helm and manifests' },
+  { name: 'ui', text: 'notifications, modals and external links' },
+  { name: 'storage', text: 'data the plugin keeps between runs' },
+];
 
 export default function DevelopersScreen() {
   const t = useTheme();
@@ -49,6 +53,7 @@ export default function DevelopersScreen() {
       <Head>
         <title>Plugin developers · Shoal</title>
         <link rel="canonical" href={`${CONFIG.siteUrl}developers`} />
+        <meta property="og:url" content={`${CONFIG.siteUrl}developers`} />
       </Head>
 
       <View style={styles.head}>
@@ -68,21 +73,24 @@ export default function DevelopersScreen() {
         <View style={{ gap: 10, marginTop: 4 }}>
           <Bullet>Register pages, dashboard widgets, sidebar entries, modals and resource actions</Bullet>
           <Bullet>Declare settings in the manifest and Shoal draws the settings form for you</Bullet>
-          <Bullet>Store data per plugin and send desktop notifications</Bullet>
+          <Bullet>Store data per plugin and show notifications in the app</Bullet>
           <Bullet>Installed plugins run their Node code in a separate process</Bullet>
         </View>
         <CodeBlock lines={MANIFEST} />
       </Section>
 
-      <Section tag="Permissions" heading="Six capabilities, all opt-in.">
+      <Section tag="Permissions" heading="Three capabilities, all opt-in.">
         <Body>
-          Plugins only reach what the manifest declares. The validator rejects anything outside this
-          list.
+          Plugins only reach what the manifest declares. The manifest also accepts filesystem,
+          network and notifications, which are reserved for 1.0 and grant nothing yet.
         </Body>
         <View style={styles.perms}>
           {PERMISSIONS.map((p) => (
-            <View key={p} style={[styles.perm, { borderColor: t.border, backgroundColor: t.card }]}>
-              <Text style={{ fontFamily: MONO, fontSize: 13, color: t.ink2 }}>{p}</Text>
+            <View
+              key={p.name}
+              style={[styles.perm, { borderColor: t.border, backgroundColor: t.card }]}>
+              <Text style={{ fontFamily: MONO, fontSize: 13, color: t.ink }}>{p.name}</Text>
+              <Text style={{ fontSize: 13, color: t.ink3 }}>{p.text}</Text>
             </View>
           ))}
         </View>
@@ -136,10 +144,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   perm: {
+    flexGrow: 1,
+    flexBasis: 260,
+    gap: 4,
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 12,
-    paddingVertical: 7,
+    paddingVertical: 9,
   },
   ctaRow: {
     flexDirection: 'row',

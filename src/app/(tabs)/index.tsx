@@ -17,7 +17,7 @@ import {
   Subtitle,
   Title,
 } from '@/components/ui';
-import { CONFIG, docsUrl, ghUrl, releasesUrl } from '@/config';
+import { CONFIG, docsUrl, ghUrl, releasesUrl, STABLE_RELEASED } from '@/config';
 import { useTheme } from '@/theme';
 
 const SCREENSHOTS = {
@@ -132,7 +132,10 @@ const DOWNLOADS = [
   {
     icon: 'linux',
     title: 'Linux',
-    items: ['AppImage with automatic updates', '.deb package for Debian and Ubuntu'],
+    items: [
+      'AppImage with automatic updates, needs libfuse2',
+      '.deb package for Debian and Ubuntu, recommended on Ubuntu 24.04, no automatic updates',
+    ],
   },
 ] as const;
 
@@ -159,6 +162,7 @@ export default function HomeScreen() {
       <Head>
         <title>{CONFIG.siteTitle}</title>
         <link rel="canonical" href={CONFIG.siteUrl} />
+        <meta property="og:url" content={CONFIG.siteUrl} />
       </Head>
 
       {/* Hero */}
@@ -185,6 +189,12 @@ export default function HomeScreen() {
           <Button label="Star on GitHub" icon="github" variant="ghost" url={ghUrl()} />
         </View>
         <Body style={{ textAlign: 'center' }}>Windows 10+ · Linux (AppImage · deb)</Body>
+        {STABLE_RELEASED ? null : (
+          <Body style={{ textAlign: 'center', maxWidth: 560 }}>
+            Beta {CONFIG.appVersion} ships on {CONFIG.stableReleaseDate}. Until then the download
+            button opens the releases page, where the release candidates are.
+          </Body>
+        )}
       </View>
 
       {/* Works with */}
@@ -290,11 +300,12 @@ export default function HomeScreen() {
           your PC&quot;. Choose More info, then Run anyway.
         </Notice>
         <Body>
-          You need kubectl on your PATH. Docker is only needed to create local kind or k3d
-          clusters.
+          You need kubectl on your PATH. Creating local clusters needs kind or k3d plus Docker,
+          and the Compose migration needs kompose. On Linux the AppImage needs libfuse2
+          (libfuse2t64 on Ubuntu 24.04), the .deb does not.
         </Body>
         <Button
-          label="Download the latest release"
+          label={STABLE_RELEASED ? 'Download the latest release' : 'See the releases'}
           icon="download"
           url={releasesUrl()}
           style={{ marginTop: 6, alignSelf: 'flex-start' }}

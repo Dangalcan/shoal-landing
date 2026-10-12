@@ -146,10 +146,19 @@ export function Button({
   const solid = variant === 'primary';
   const bg = solid ? (t.dark ? '#f1f5f9' : '#0f172a') : 'transparent';
   const fg = solid ? (t.dark ? '#0f172a' : '#ffffff') : t.ink;
+  // On the web a link has to be a real anchor so that crawlers, middle
+  // clicks and "open in new tab" see the URL. react-native-web renders a
+  // View with href as <a>. Natively, Linking opens the browser.
+  const webLink =
+    url && Platform.OS === 'web'
+      ? { href: url, hrefAttrs: { target: '_blank', rel: 'noopener noreferrer' } }
+      : {};
+  const press = url && Platform.OS !== 'web' ? () => Linking.openURL(url) : onPress;
   return (
     <Pressable
-      accessibilityRole="button"
-      onPress={url ? () => Linking.openURL(url) : onPress}
+      accessibilityRole={url ? 'link' : 'button'}
+      onPress={press}
+      {...webLink}
       style={({ pressed }) => [
         styles.button,
         { backgroundColor: bg, borderColor: solid ? bg : t.border, opacity: pressed ? 0.8 : 1 },
