@@ -80,7 +80,7 @@ promo/                promo video source, export script and MP4s (not part of th
 
 The plugin marketplace screen (live catalog from kdMarket with an offline
 snapshot) was removed for the 0.9 beta. It returns with Shoal 1.0; the code
-is in commit `c5a334b` (`src/app/(tabs)/marketplace.tsx`,
+is in commit `75d4c78` (`src/app/(tabs)/marketplace.tsx`,
 `src/lib/marketplace.ts`, `src/data/catalog.ts`).
 
 ## License
