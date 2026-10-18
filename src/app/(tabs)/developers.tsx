@@ -122,9 +122,6 @@ export default function DevelopersScreen() {
           <Bullet icon="clock-outline">
             Signing for third-party plugins so users can install them safely
           </Bullet>
-          <Bullet icon="clock-outline">
-            Free and paid plugins, with developers keeping most of every sale
-          </Bullet>
         </View>
       </Section>
     </ScrollView>

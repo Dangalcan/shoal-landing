@@ -57,7 +57,7 @@ const FEATURES = [
   {
     icon: 'console',
     title: 'Logs and terminal',
-    text: 'Read recent container logs, run commands inside a pod, and use kubectl or any local tool from the built-in terminal.',
+    text: 'Follow container logs live, run commands inside a pod, and use kubectl and other command-line tools from the built-in terminal.',
   },
   {
     icon: 'connection',
@@ -231,7 +231,10 @@ export default function HomeScreen() {
       {/* Local first */}
       <Section tag="Local first" heading="Your clusters, your machine, nothing else.">
         <View style={{ gap: 10, marginTop: 4 }}>
-          <Bullet>Works offline with no telemetry, no login and no cloud account</Bullet>
+          <Bullet>
+            No account, no login and no telemetry. Apart from the update check against GitHub
+            Releases, Shoal only talks to your clusters
+          </Bullet>
           <Bullet>
             Reads your kubeconfig from <Text style={{ fontFamily: MONO }}>~/.kube/config</Text> or a
             path you choose, and remembers it
@@ -242,7 +245,7 @@ export default function HomeScreen() {
       </Section>
 
       {/* Architecture */}
-      <Section tag="Architecture" heading="Native desktop. Sandboxed plugins. Zero cloud.">
+      <Section tag="Architecture" heading="Native desktop. Sandboxed plugins. No account, no telemetry.">
         <View style={styles.grid}>
           {ARCH.map((a) => (
             <Card key={a.title} style={styles.gridCard}>
