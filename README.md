@@ -30,7 +30,6 @@ on the Free plan needs a public repository.
 One-time setup in the repository settings: Pages source "GitHub Actions",
 custom domain `shoal.dangalcan.com`, and Enforce HTTPS once the certificate
 is ready. DNS needs a `CNAME` record from `shoal` to `dangalcan.github.io`.
-The exact commands are in the app repository's `docs/GOING_PUBLIC.md`.
 
 **Docker.** A multi-stage build that exports the site and serves it with
 nginx (route fallbacks, real 404s, immutable caching for hashed bundles):
