@@ -65,10 +65,11 @@ promo/                promo video source, export script and MP4s (not part of th
 
 ## Common edits
 
-- **Stable release day (2 November 2026)**: set `STABLE_RELEASED` to `true`
-  in `src/config.ts`. The download buttons then point at `/releases/latest`
-  (which skips prereleases) and the "ships on" note disappears. Until then
-  they open the releases list, where the release candidates are.
+- **Prerelease-only period**: when `/releases/latest` has nothing to show
+  again (only prereleases published), set `STABLE_RELEASED` to `false` in
+  `src/config.ts` and `stableReleaseDate` to the day the stable version
+  ships. The download buttons then open the releases list and the Home
+  screen shows that date. Set it back to `true` on release day.
 - **New release**: bump `appVersion` in `src/config.ts`.
 - **New screenshots**: regenerate them in the app repo with
   `npm run screenshots` (see its `docs/E2E-TESTS.md`), then convert the
