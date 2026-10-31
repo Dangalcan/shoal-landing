@@ -6,7 +6,7 @@ export const CONFIG = {
   repoUrl: 'https://github.com/Dangalcan/shoal',
 
   /** Version of the desktop app advertised on the Home screen. */
-  appVersion: '0.9.0',
+  appVersion: '0.9.1',
 
   /** Day the stable 0.9.0 release is published, shown until STABLE_RELEASED is true. */
   stableReleaseDate: '2 November 2026',
