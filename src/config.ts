@@ -23,12 +23,13 @@ export const CONFIG = {
 } as const;
 
 /**
- * Flip to true the day v0.9.0 is published as a stable release. Until then
- * GitHub's /releases/latest has nothing to show (release candidates are
- * prereleases), so the download buttons open the releases list, where the
- * release candidates are, and the Home screen says when the beta ships.
+ * True while GitHub's /releases/latest points at a stable Shoal release. Set
+ * it to false for a prerelease-only period (release candidates are
+ * prereleases, so /releases/latest has nothing to show): the download
+ * buttons then open the releases list and the Home screen says when the
+ * stable version ships (stableReleaseDate).
  */
-export const STABLE_RELEASED: boolean = false;
+export const STABLE_RELEASED: boolean = true;
 
 export function ghUrl(path = ''): string {
   return CONFIG.repoUrl + path;
