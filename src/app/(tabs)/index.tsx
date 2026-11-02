@@ -127,6 +127,7 @@ const DOWNLOADS = [
     items: [
       'Installer with automatic updates',
       'Portable .exe that needs no install and does not update itself',
+      'Scoop: scoop bucket add shoal https://github.com/Dangalcan/scoop-shoal, then scoop install shoal',
     ],
   },
   {

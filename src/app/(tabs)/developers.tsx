@@ -37,8 +37,11 @@ const MANIFEST = [
 ];
 
 const PERMISSIONS = [
-  { name: 'kubernetes', text: 'cluster reads and writes through kubectl, Helm and manifests' },
-  { name: 'ui', text: 'notifications, modals and external links' },
+  { name: 'kubernetes', text: 'cluster reads: resources, logs, metrics and watches' },
+  { name: 'kubernetes:write', text: 'create, change and delete resources, apply manifests, run commands in pods' },
+  { name: 'helm', text: 'every Helm call' },
+  { name: 'secrets', text: 'the data inside Secrets, which otherwise arrive without it' },
+  { name: 'ui', text: 'sidebar entries, notifications, modals and external links' },
   { name: 'storage', text: 'data the plugin keeps between runs' },
 ];
 
@@ -79,10 +82,10 @@ export default function DevelopersScreen() {
         <CodeBlock lines={MANIFEST} />
       </Section>
 
-      <Section tag="Permissions" heading="Three capabilities, all opt-in.">
+      <Section tag="Permissions" heading="Six capabilities, all opt-in.">
         <Body>
-          Plugins only reach what the manifest declares. The manifest also accepts filesystem,
-          network and notifications, which are reserved for 1.0 and grant nothing yet.
+          Plugins only reach what the manifest declares, and a manifest that asks for anything
+          else, such as filesystem or network, is rejected.
         </Body>
         <View style={styles.perms}>
           {PERMISSIONS.map((p) => (
